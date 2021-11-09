@@ -29,6 +29,8 @@ import org.keycloak.models.UserSessionModel;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Stream;
 
 /**
  * Persistence of userSessions is disabled . Useful just if you never need survive of userSessions/clientSessions
@@ -48,6 +50,30 @@ public class DisabledUserSessionPersisterProvider implements UserSessionPersiste
     @Override
     public void init(Config.Scope config) {
 
+    }
+
+    public UserSessionModel loadUserSession(RealmModel realm, String userSessionId, boolean offline) {
+        return null;
+    }
+
+    @Override
+    public Stream<UserSessionModel> loadUserSessionsStream(RealmModel realm, ClientModel client, boolean offline, Integer firstResult, Integer maxResults) {
+        return Stream.empty();
+    }
+
+    @Override
+    public Stream<UserSessionModel> loadUserSessionsStream(RealmModel realm, UserModel user, boolean offline, Integer firstResult, Integer maxResults) {
+        return Stream.empty();
+    }
+
+    @Override
+    public int getUserSessionsCount(RealmModel realm, ClientModel clientModel, boolean offline) {
+        return 0;
+    }
+
+    @Override
+    public Map<String, Long> getUserSessionsCountsByClients(RealmModel realm, boolean offline) {
+        return Collections.emptyMap();
     }
 
     @Override
