@@ -26,11 +26,62 @@ import org.keycloak.provider.Provider;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Stream;
 
 /**
  * @author <a href="mailto:mposolda@redhat.com">Marek Posolda</a>
  */
 public interface UserSessionPersisterProvider extends Provider {
+
+    /**
+     * Loads the user session with the given userSessionId.
+     * @param userSessionId
+     * @param offline
+     * @return
+     */
+    UserSessionModel loadUserSession(RealmModel realm, String userSessionId, boolean offline);
+
+    /**
+     * Loads the user sessions for the given {@link UserModel} in the given {@link RealmModel} if present.
+     * @param realm
+     * @param user
+     * @param offline
+     * @param firstResult
+     * @param maxResults
+     * @return
+     */
+    Stream<UserSessionModel> loadUserSessionsStream(RealmModel realm, UserModel user, boolean offline, Integer firstResult, Integer maxResults);
+
+    /**
+     * Loads the user sessions for the given {@link ClientModel} in the given {@link RealmModel} if present.
+     *
+     * @param realm
+     * @param client
+     * @param offline
+     * @param firstResult
+     * @param maxResults
+     * @return
+     */
+    Stream<UserSessionModel> loadUserSessionsStream(RealmModel realm, ClientModel client, boolean offline, Integer firstResult, Integer maxResults);
+
+    /**
+     * Retrieves the count of user client-sessions for the given client
+     *
+     * @param realm
+     * @param clientModel
+     * @param offline
+     * @return
+     */
+    int getUserSessionsCount(RealmModel realm, ClientModel clientModel, boolean offline);
+
+    /**
+     * Returns a {@link Map} containing the number of user-sessions aggregated by client id for the given realm.
+     * @param realm
+     * @param offline
+     * @return the count {@link Map} with clientId as key and session count as value
+     */
+    Map<String, Long> getUserSessionsCountsByClients(RealmModel realm, boolean offline);
 
     // Persist just userSession. Not it's clientSessions
     void createUserSession(UserSessionModel userSession, boolean offline);

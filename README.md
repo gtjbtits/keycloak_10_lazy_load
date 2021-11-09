@@ -1,3 +1,16 @@
+# Lazy load offlineSessions patch
+
+This version of KK has disabled offline sessions preload action on start. Instead, it's using load offline sessions from the underlying database on demand.  
+It can be useful for large systems with small RPC, but tons of sessions.
+
+## Quick start
+
+1. Build the KK:
+```bash
+mvn -Pdistribution -pl distribution/server-dist -am -Dmaven.test.skip clean install
+```
+2. Grab it from the dist folder: *distribution/server-dist/target/keycloak-10.0.2.tar.gz*
+
 # Keycloak
 
 Keycloak is an Open Source Identity and Access Management solution for modern Applications and Services.
